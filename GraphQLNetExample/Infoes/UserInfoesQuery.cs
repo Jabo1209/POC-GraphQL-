@@ -1,4 +1,3 @@
-
 using GraphQL;
 using GraphQL.Types;
 using GraphQLNetExample.Commons;

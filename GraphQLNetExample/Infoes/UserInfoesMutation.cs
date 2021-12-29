@@ -2,7 +2,6 @@
 using GraphQL.Types;
 using GraphQLNetExample.EntityFramework;
 using GraphQLNetExample.Commons;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GraphQLNetExample.Infoes
 {
