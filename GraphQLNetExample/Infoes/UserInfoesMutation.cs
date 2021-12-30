@@ -21,32 +21,32 @@ namespace GraphQLNetExample.Infoes
 
                     var info = new UserInfo
                     {
-                        IuserAccount = context.GetArgument<string>("account"),
-                        IuserPassword = context.GetArgument<string>("password")
+                        Email = context.GetArgument<string>("account"),
+                        Password = context.GetArgument<string>("password")
                     };
 
-                    if (Helper.IsNotValidEmail(info.IuserAccount))
+                    if (Helper.IsNotValidEmail(info.Email))
                     {
-                        info.IuserAccount = "Not a valid Email";
-                        info.IuserPassword = "Error";
+                        info.Email = "Not a valid Email";
+                        info.Password = "Error";
                         return info;
                     }
 
-                    if (string.IsNullOrWhiteSpace(info.IuserPassword))
+                    if (string.IsNullOrWhiteSpace(info.Password))
                     {
-                        info.IuserAccount = "Error";
-                        info.IuserPassword = "Please Enter Password";
+                        info.Email = "Error";
+                        info.Password = "Please Enter Password";
                         return info;
                     }
 
                     var accounts = from a in userinfoesContext.UserInfo
                                     select a;
-                    accounts = accounts.Where(a => a.IuserAccount.Contains(info.IuserAccount));
+                    accounts = accounts.Where(a => a.Email.Contains(info.Email));
 
                     if (accounts.Any())
                     {
-                        info.IuserAccount = "Email Is Registered";
-                        info.IuserPassword = "Error";
+                        info.Email = "Email Is Registered";
+                        info.Password = "Error";
                         return info;
                     }
                     else

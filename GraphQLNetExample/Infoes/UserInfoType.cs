@@ -9,7 +9,7 @@ public class UserInfoType : ObjectGraphType<UserInfo>
         Name = "UserInfo";
         Description = "UserInfo Type";
         Field(d => d.ID, nullable: false).Description("UserInfo ID");
-        Field(d => d.IuserAccount, nullable: false).Description("UserInfo IuserAccount");
-        Field(d => d.IuserPassword, nullable: false).Description("UserInfo IuserPassword");
+        Field(d => d.Email, nullable: false).Description("UserInfo Email");
+        Field(d => d.Password, nullable: false).Description("UserInfo Password");
     }
 }

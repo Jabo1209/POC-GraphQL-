@@ -20,47 +20,47 @@ public class UserInfoesQuery : ObjectGraphType
                 var userinfoesContext = context.RequestServices.GetRequiredService<UserInfoesContext>();
                 var info = new UserInfo
                 {
-                    IuserAccount = context.GetArgument<string>("account"),
-                    IuserPassword = context.GetArgument<string>("password")
+                    Email = context.GetArgument<string>("account"),
+                    Password = context.GetArgument<string>("password")
                 };
 
-                if (Helper.IsNotValidEmail(info.IuserAccount))
+                if (Helper.IsNotValidEmail(info.Email))
                 {
-                    info.IuserAccount = "Not a valid Email";
-                    info.IuserPassword = "Error";
+                    info.Email = "Not a valid Email";
+                    info.Password = "Error";
                     return info;
                 }
 
-                if (string.IsNullOrWhiteSpace(info.IuserPassword))
+                if (string.IsNullOrWhiteSpace(info.Password))
                 {
-                    info.IuserAccount = "Error";
-                    info.IuserPassword = "Please Enter Password";
+                    info.Email = "Error";
+                    info.Password = "Please Enter Password";
                     return info;
                 }
 
                 var accounts = from a in userinfoesContext.UserInfo
                                select a;
                 var passwords = from p in userinfoesContext.UserInfo
-                                where p.IuserAccount == info.IuserAccount
+                                where p.Email == info.Email
                                 select p;
-                accounts = accounts.Where(s => s.IuserAccount.Contains(info.IuserAccount));
-                passwords = passwords.Where(p => p.IuserPassword.Contains(info.IuserPassword));
+                accounts = accounts.Where(s => s.Email.Contains(info.Email));
+                passwords = passwords.Where(p => p.Password.Contains(info.Password));
                 if (accounts.Any() && passwords.Any())
                 {
-                    info.IuserAccount = "Login Successfully";
-                    info.IuserPassword = "Login Successfully";
+                    info.Email = "Login Successfully";
+                    info.Password = "Login Successfully";
                     return info;
                 }
                 else if (accounts.Any() && !passwords.Any())
                 {
-                    info.IuserAccount = "Error";
-                    info.IuserPassword = "Password Is Incorrect";
+                    info.Email = "Error";
+                    info.Password = "Password Is Incorrect";
                     return info;
                 }
                 else
                 {
-                    info.IuserAccount = "Not Found Email";
-                    info.IuserPassword = "Error";
+                    info.Email = "Not Found Email";
+                    info.Password = "Error";
                     return info;
                 }
             });

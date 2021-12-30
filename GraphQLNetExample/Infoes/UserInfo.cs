@@ -6,7 +6,7 @@ public class UserInfo
 {
     public int ID { get; set; }
     [Required]
-    public string IuserAccount { get; set; }
+    public string Email { get; set; }
     [Required]
-    public string IuserPassword { get; set; }
+    public string Password { get; set; }
 }
