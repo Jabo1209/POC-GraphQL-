@@ -11,7 +11,7 @@ public class UserInfoesQuery : ObjectGraphType
     {
         Field<UserInfoType>(
             "login",
-            arguments:new QueryArguments(
+            arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "account" },
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "password" }
             ),
@@ -64,6 +64,42 @@ public class UserInfoesQuery : ObjectGraphType
                     return info;
                 }
             });
+
+        Field<UserInfoType>(
+                "search",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "account" }
+                ),
+                resolve: context =>
+                {
+                    var userinfoesContext = context.RequestServices.GetRequiredService<UserInfoesContext>();
+
+                    var info = new UserInfo
+                    {
+                        Email = context.GetArgument<string>("account"),
+                    };
+
+                    var accounts = from a in userinfoesContext.UserInfo
+                                    select a;
+
+                    var passwords = from p in userinfoesContext.UserInfo
+                                    where p.Email == info.Email
+                                    select p;
+                    accounts = accounts.Where(s => s.Email.Contains(info.Email));
+         
+                    if (accounts.Any())
+                    {
+                        info.ID = passwords.FirstOrDefault().ID;
+                        info.Password= passwords.FirstOrDefault().Password;
+                        return info;
+                    }
+                    else
+                    {
+                        info.Email = "Not Found Email";
+                        info.Password= "Error";
+                        return info;
+                    }
+              });
     }
 
 }
